@@ -227,14 +227,6 @@ float minusDetune;
 unsigned long filterEnvAttack;
 unsigned long filterEnvRelease;
 
-float voices[4];
-float VoiceFreq[4];
-float VoiceVel[4];
-float voiceMod;
-
-float ampArray[4];
-int voiceNum;
-
 uint32_t indicatorColor[2] = {
   pixels.Color(255, 255, 0),
   pixels.Color(255, 0, 0)
