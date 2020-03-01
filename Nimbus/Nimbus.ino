@@ -486,54 +486,6 @@ void OnNoteOff(byte channel, byte note, byte velocity) {
 }
 // END MIDI
 
-void loadPreset(int number) {
-  String currentPreset = fileNames[number];
-
-  myFile = SD.open(currentPreset.c_str());
-
-  if (myFile) {
-    for (int i = 0; i < 20; i++) {
-      int input = myFile.parseFloat();
-      rawVals[i] = input;
-      if (i < 16) {
-        paramLocks[i] = true;
-      }
-    }
-    //  close the file:
-    myFile.close();
-    // set all them params
-    for (int i = 0; i < 20; ++i) {
-      setSynthParams(i, rawVals[i]);
-    }
-  } else {
-    //  if the file didn't open, print an error:
-    Serial.println("error opening file");
-  }
-}
-
-void savePreset(int number) {
-  String currentPreset = fileNames[number];
-  // Remove File
-  if (SD.exists(currentPreset.c_str())) {
-    Serial.println("remove the file");
-    SD.remove(currentPreset.c_str());
-  }
-  // open File
-  myFile = SD.open(currentPreset.c_str(), FILE_WRITE);
-  // if the file opened okay, write to it:
-  if (myFile) {
-    for (int i = 0; i < 20; ++i) {
-      myFile.println(rawVals[i]);
-    }
-    //  close the file:
-    myFile.close();
-    Serial.print("wrote to file");
-  } else {
-    //  if the file didn't open, print an error:
-    Serial.println("error opening file");
-  }
-}
-
 void neoPixelsOff() {
   for (int i = 0; i < 12; ++i) {
     pixels.setPixelColor(i, pixels.Color(0, 0, 0));
@@ -662,13 +614,10 @@ void checkSeqStart() {
 void updateEncoder() {
   int MSB = digitalRead(encoderPin1); // MSB = most significant bit
   int LSB = digitalRead(encoderPin2); // LSB = least significant bit
-
   encoded = (MSB << 1) | LSB; // converting the 2 pin value to single number
   int sum  = (lastEncoded << 2) | encoded; // adding it to the previous encoded value
-
   if (sum == 0b1101 || sum == 0b0100 || sum == 0b0010 || sum == 0b1011) encoderValue ++;
   if (sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000) encoderValue --;
-
   if (encoderValue < 0) {
     encoderValue = 0;
   }
@@ -681,12 +630,10 @@ void updateEncoder() {
       encoderValue = 2000;
     }
   }
-
   scaledEncVal = encoderValue / 4;
-
   lastEncoded = encoded; // store this value for next time
-
 }
+
 int smoothRead(int pin) {
   int vals[8]; // array that stores 8 readings.
   for (int i = 0; i < 8; i++) {

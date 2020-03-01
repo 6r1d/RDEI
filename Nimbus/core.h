@@ -164,21 +164,9 @@ int menuCount;
 int encoded;
 unsigned long clearTimeStamp;
 
-// preset stuff
+#include "preset.h"
 const int chipSelect = 10;
 int presetNumber = -1;
-File myFile;
-String fileNames[8] = {
-  "1.txt",
-  "2.txt",
-  "3.txt",
-  "4.txt",
-  "5.txt",
-  "6.txt",
-  "7.txt",
-  "8.txt"
-};
-bool paramLocks[16];
 
 // sequencer
 Metro metronome = Metro(500);
@@ -198,8 +186,6 @@ float currentSeqNoteTwo;
 int seqLength;
 
 // Synth Params
-float rawVals[20];
-
 float finalAmp;
 float voiceAPeak;
 float voiceBPeak;
