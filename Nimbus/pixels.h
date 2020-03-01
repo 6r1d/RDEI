@@ -1,0 +1,17 @@
+#define PIXEL_PIN 2
+#define NUMPIXELS 12
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
+
+void neoPixelsOff() {
+  for (int i = 0; i < 12; ++i) {
+    pixels.setPixelColor(i, pixels.Color(0, 0, 0));
+  }
+}
+
+void pixelDance() {
+  for (int i = 0; i < NUMPIXELS; ++i) {
+    pixels.setPixelColor(i, pixels.Color(0, 100, 255));
+    pixels.show();
+    delay(100);
+  }
+}

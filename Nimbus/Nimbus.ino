@@ -78,13 +78,7 @@ void setup() {
   // Pixels
   pixels.begin();
   pixels.setBrightness(200);
-
-  // pixelDance
-  for (int i = 0; i < NUMPIXELS; ++i) {
-    pixels.setPixelColor(i, pixels.Color(0, 100, 255));
-    pixels.show();
-    delay(100);
-  }
+  pixelDance();
 
   // Switches/EncoderBtn
   pinMode(3, INPUT_PULLUP);
@@ -485,12 +479,6 @@ void OnNoteOff(byte channel, byte note, byte velocity) {
   endVoice(freq);
 }
 // END MIDI
-
-void neoPixelsOff() {
-  for (int i = 0; i < 12; ++i) {
-    pixels.setPixelColor(i, pixels.Color(0, 0, 0));
-  }
-}
 
 void setVoceOneShape (bool saw) {
   if (saw) {

@@ -126,9 +126,7 @@ int scale;
 float frequency;
 
 // Pixels
-#define PIXEL_PIN 2
-#define NUMPIXELS 12
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
+#include "pixels.h"
 
 // Encoder
 int encoderPin1 = 21;
