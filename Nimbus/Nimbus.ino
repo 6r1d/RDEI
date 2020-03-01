@@ -5,15 +5,17 @@
 #include "usb_midi.h"
 
 void setup() {
-  AudioMemory(64);
-  sgtl5000_1.enable();
-  sgtl5000_1.volume(.8);
+  setupAudio();
 
   Serial.begin(9600);
 
   setupMIDIHandlers();
   setupSD();
   resetGraph();
+  setupEncoder();
+  setupPixels();
+  setupSwitches();
+  setupEncoderBtn();
   resetMux();
 
   // 
@@ -22,6 +24,7 @@ void setup() {
 
 void loop() {
   usbMIDI.read();
+  
   // VoicePixels
   if (seqEditMode || seqRunning) {
     pixels.setPixelColor(seqPage + 8, pixels.Color(0, 0, 255));
@@ -31,6 +34,7 @@ void loop() {
     pixels.setPixelColor(10, pixels.Color(0, 0, 255 * voiceCPeak));
     pixels.setPixelColor(11, pixels.Color(255 * voiceDPeak, 255 * voiceDPeak, 0));
   }
+  
   // BtnPixels
   if (menuCount > 0) {
     // menu stuff

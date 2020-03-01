@@ -38,3 +38,16 @@ void updateEncoder() {
   // store this value for next time
   lastEncoded = encoded;
 }
+
+void setupEncoder() {
+  pinMode(encoderPin1, INPUT);
+  pinMode(encoderPin2, INPUT);
+  digitalWrite(encoderPin1, HIGH);
+  digitalWrite(encoderPin2, HIGH);
+  attachInterrupt(21, updateEncoder, CHANGE);
+  attachInterrupt(24, updateEncoder, CHANGE);
+}
+
+void setupEncoderBtn() {
+  pinMode(20, INPUT_PULLUP);
+}
