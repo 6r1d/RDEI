@@ -199,9 +199,3 @@ float plusDetune;
 float minusDetune;
 unsigned long filterEnvAttack;
 unsigned long filterEnvRelease;
-
-uint32_t indicatorColor[2] = {
-  pixels.Color(255, 255, 0),
-  pixels.Color(255, 0, 0)
-};
-int indicatorIndex;

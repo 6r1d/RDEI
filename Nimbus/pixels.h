@@ -2,6 +2,12 @@
 #define NUMPIXELS 12
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
+uint32_t indicatorColor[2] = {
+  pixels.Color(255, 255, 0),
+  pixels.Color(255, 0, 0)
+};
+int indicatorIndex;
+
 void neoPixelsOff() {
   for (int i = 0; i < 12; ++i) {
     pixels.setPixelColor(i, pixels.Color(0, 0, 0));

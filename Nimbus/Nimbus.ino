@@ -2,6 +2,7 @@
 #include "mux.h"
 #include "encoder.h"
 #include "voice.h"
+#include "usb_midi.h"
 
 void setup() {
   AudioMemory(64);
@@ -10,10 +11,7 @@ void setup() {
 
   Serial.begin(9600);
 
-  // MIDI
-  usbMIDI.setHandleNoteOff(OnNoteOff);
-  usbMIDI.setHandleNoteOn(OnNoteOn);
-  usbMIDI.setHandleControlChange(OnControlChange);
+  setupMIDIHandlers();
 
   // SD
   SPI.setMOSI(7);  //  Audio shield has MOSI on pin 7
@@ -460,25 +458,6 @@ void loop() {
 
   firstRun = false;
 }
-
-// START MIDI
-void OnControlChange(byte channel, byte control, byte value) {
-  setSynthParams(control - 1, value * 8.055);
-  rawVals[control - 1] = value * 8.055;
-  paramLocks[control - 1] = true;
-}
-
-void OnNoteOn(byte channel, byte note, byte velocity) {
-  float freq = 440.0 * powf(2.0, (float)(note - 69) * 0.08333333);
-  float vel = (float)velocity / 127;
-  startVoice(freq, vel);
-}
-
-void OnNoteOff(byte channel, byte note, byte velocity) {
-  float freq = 440.0 * powf(2.0, (float)(note - 69) * 0.08333333);
-  endVoice(freq);
-}
-// END MIDI
 
 void clearEverything() {
   neoPixelsOff();
