@@ -23,21 +23,19 @@ void setup() {
     return;
   }
   Serial.println("initialization done.");
-
+  
   // lfoMixer
   LfoMixer.gain(0, .5);
   LfoMixer.gain(1, .5);
-
+  // Set LFO amplitudes
   lfo2Amt.amplitude(1);
   LFO2.amplitude(1);
   LFO2.frequency(1);
-
   // finalMixer
   finalMixer.gain(0, .25);
   finalMixer.gain(1, .25);
   finalMixer.gain(2, .25);
   finalMixer.gain(3, .25);
-
   // Voice 1
   voiceOneA.amplitude(.25);
   voiceOneB.amplitude(.25);
@@ -60,13 +58,11 @@ void setup() {
   noiseVoiceD.amplitude(.125);
   // LFO
   LFO1.begin(.7, .5, WAVEFORM_SAWTOOTH_REVERSE);
-
   // filter
   filterA.octaveControl(2.5);
   filterB.octaveControl(2.5);
   filterC.octaveControl(2.5);
   filterD.octaveControl(2.5);
-
   // ENCODER KNOB
   pinMode(encoderPin1, INPUT);
   pinMode(encoderPin2, INPUT);
@@ -74,19 +70,16 @@ void setup() {
   digitalWrite(encoderPin2, HIGH);
   attachInterrupt(21, updateEncoder, CHANGE);
   attachInterrupt(24, updateEncoder, CHANGE);
-
   // Pixels
   pixels.begin();
   pixels.setBrightness(200);
   pixelDance();
-
   // Switches/EncoderBtn
   pinMode(3, INPUT_PULLUP);
   pinMode(4, INPUT_PULLUP);
   pinMode(5, INPUT_PULLUP);
   pinMode(8, INPUT_PULLUP);
   pinMode(20, INPUT_PULLUP);
-
   // Mux
   pinMode(s0, OUTPUT);
   pinMode(s1, OUTPUT);
@@ -97,13 +90,12 @@ void setup() {
   digitalWrite(s1, LOW);
   digitalWrite(s2, LOW);
   digitalWrite(s3, LOW);
-
+  // 
   firstRun = true;
 }
 
 void loop() {
   usbMIDI.read();
-
   // VoicePixels
   if (seqEditMode || seqRunning) {
     pixels.setPixelColor(seqPage + 8, pixels.Color(0, 0, 255));
@@ -113,7 +105,6 @@ void loop() {
     pixels.setPixelColor(10, pixels.Color(0, 0, 255 * voiceCPeak));
     pixels.setPixelColor(11, pixels.Color(255 * voiceDPeak, 255 * voiceDPeak, 0));
   }
-
   // BtnPixels
   if (menuCount > 0) {
     // menu stuff
@@ -544,7 +535,6 @@ void setSynthParams(int number, float value) {
     plusDetune = map(masterDetune, 0, 1023, 1, 1.5);
     minusDetune = map(masterDetune, 0, 1023, 1, .75);
   } else if (number == 7) {
-
     if (seqRunning) {
       lfoIndex = value / 204.6;
       lfoIndex = constrain(lfoIndex, 0, 4);
