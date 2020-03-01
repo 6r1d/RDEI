@@ -128,14 +128,6 @@ float frequency;
 // Pixels
 #include "pixels.h"
 
-// Encoder
-int encoderPin1 = 21;
-int encoderPin2 = 24;
-volatile int lastEncoded = 0;
-volatile long encoderValue = 0;
-int scaledEncVal;
-int prevScaledEncVal;
-
 // Touch Pins
 bool noteTouched[8];
 int noteTouchPins[8] = {0, 1, 15, 16, 17, 25, 32, 33};
@@ -159,7 +151,7 @@ float analogValuesLag[16];
 bool firstRun;
 
 int menuCount;
-int encoded;
+
 unsigned long clearTimeStamp;
 
 #include "preset.h"

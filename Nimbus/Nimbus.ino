@@ -1,5 +1,6 @@
 #include "core.h"
 #include "mux.h"
+#include "encoder.h"
 #include "voice.h"
 
 void setup() {
@@ -282,10 +283,12 @@ void loop() {
   // Encoder
   if (abs(scaledEncVal - prevScaledEncVal) > 0) {
     if (seqEditMode) {
-      seqStep = scaledEncVal; // Step Selection
+      // Step Selection
+      seqStep = scaledEncVal;
     } else if (seqRunning) {
       seqInterval = 2000 - encoderValue;
-      metronome.interval(seqInterval); // Speed
+      // Speed
+      metronome.interval(seqInterval);
       lfoFreq = (1 / seqInterval) * lfoTimeMathArray[lfoIndex];
     }
     prevScaledEncVal = scaledEncVal;
@@ -295,9 +298,7 @@ void loop() {
   for (int i = 0; i < 16; ++i) {
     setMuxPin(i);
     analogValues[i] = analogRead(SIG_pin);
-
     if ((abs(analogValues[i] - analogValuesLag[i]) > 1) || firstRun) {
-
       if (paramLocks[i] && (abs(analogValues[i] - rawVals[i]) < 20)) {
         paramLocks[i] = false;
       }
@@ -309,7 +310,7 @@ void loop() {
     }
   }
 
-  // Switches/EncoderBtn
+  // Switches / EncoderBtn
   for (int i = 0; i < 5; ++i) {
     if (btnSwBouncers[i].update() || firstRun) {
       if (i < 4) {
@@ -331,7 +332,6 @@ void loop() {
         case 4:
           if (!digitalRead(btnSwPins[i])) {
             clearTimeStamp = millis();
-
             neoPixelsOff();
             menuCount++;
             if (menuCount > 4) {
@@ -351,7 +351,7 @@ void loop() {
     }
   }
 
-  // CrearEverything
+  // Clear everything
   if ((abs(millis() - clearTimeStamp) > 2000) && !digitalRead(20)) {
     clearEverything();
     clearTimeStamp = millis();
@@ -597,29 +597,6 @@ void checkSeqStart() {
   seqStep = 0;
   seqPage = 0;
   metronome.reset();
-}
-
-void updateEncoder() {
-  int MSB = digitalRead(encoderPin1); // MSB = most significant bit
-  int LSB = digitalRead(encoderPin2); // LSB = least significant bit
-  encoded = (MSB << 1) | LSB; // converting the 2 pin value to single number
-  int sum  = (lastEncoded << 2) | encoded; // adding it to the previous encoded value
-  if (sum == 0b1101 || sum == 0b0100 || sum == 0b0010 || sum == 0b1011) encoderValue ++;
-  if (sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000) encoderValue --;
-  if (encoderValue < 0) {
-    encoderValue = 0;
-  }
-  if (seqEditMode) {
-    if (encoderValue > 124) {
-      encoderValue = 124;
-    }
-  } else if (seqRunning) {
-    if (encoderValue > 2000) {
-      encoderValue = 2000;
-    }
-  }
-  scaledEncVal = encoderValue / 4;
-  lastEncoded = encoded; // store this value for next time
 }
 
 int smoothRead(int pin) {
