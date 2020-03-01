@@ -122,7 +122,7 @@ AudioControlSGTL5000     sgtl5000_1;     // xy=1371.5,273
 
 // Amin, Bmin, Cmin, Dmin, Emin, Fmin, Gmin, Chrom
 int scale;
-// 
+// Frequency in Hz
 float frequency;
 
 // Pixels
@@ -152,14 +152,6 @@ Bounce btnSwBouncers[5] = {
   Bounce(20, 10),
 };
 int btnSwPins[5] = {3, 4, 5, 8, 20};
-
-// Mux control pins
-int s0 = 26;
-int s1 = 27;
-int s2 = 28;
-int s3 = 29;
-// Mux in "SIG" pin
-int SIG_pin = 30;
 
 // Knobs
 float analogValues[16];
