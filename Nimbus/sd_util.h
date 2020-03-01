@@ -1,3 +1,7 @@
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
 const int chipSelect = 10;
 
 // Audio shield has MicroSD MOSI on pin 7, SCK on pin 14  

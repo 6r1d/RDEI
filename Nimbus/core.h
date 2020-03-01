@@ -1,8 +1,5 @@
 #include <Audio.h>
 #include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
 
 //  GUItool: begin automatically generated code
 AudioSynthWaveform       voiceOneB;      // xy=387.5,590
@@ -115,7 +112,6 @@ AudioControlSGTL5000     sgtl5000_1;     // xy=1371.5,273
 //  GUItool: end automatically generated code
 
 #include <Bounce.h>
-#include <Adafruit_NeoPixel.h>
 #include <Metro.h>
 
 #include "theory.h"
@@ -162,8 +158,10 @@ unsigned long clearTimeStamp;
 
 // sequencer
 Metro metronome = Metro(500);
-bool seqRunning;
+
 int metroInterval = 300;
+
+bool seqRunning;
 int seqStep;
 int prevSeqStep;
 int seqPage;
