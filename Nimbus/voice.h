@@ -1,3 +1,7 @@
+/*
+ * Contains variables and functions, related to voices.
+ */
+
 float ampArray[4];
 float VoiceFreq[4];
 float VoiceVel[4];
