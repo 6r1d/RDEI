@@ -187,9 +187,7 @@ void loop() {
         startVoice(frequency, 1);
         usbMIDI.sendNoteOn(noteMIDINumbers[scale][i] + midiOctave[octaveKey], 127, 1);
       }
-
       noteTouched[i] = true;
-
     } else if (noteCurrent[i] < 1000 && noteTouched[i] == true) {
       if (menuCount > 0 && menuCount < 4) {
         menuCount = 0;
@@ -250,7 +248,7 @@ void loop() {
         startVoice(seqFrequenciesTwo[seqPage][seqStep % 8], 1);
         currentSeqNoteTwo = seqFrequenciesTwo[seqPage][seqStep % 8];
       }
-
+      //
       prevSeqStep = seqStep;
     }
     if (menuCount == 4 || menuCount == 0) {
@@ -273,14 +271,13 @@ void loop() {
   if (menuCount == 4 && seqStepClearFlag) {
     if (abs(millis() - seqStepClearTimeStamp) > 2000) {
       Serial.println("clearStep");
-
+      // 
       endVoice(seqFrequencies[seqPage][seqStep % 8]);
       seqFrequencies[seqPage][seqStep % 8] = 0;
-
+      //
       endVoice(seqFrequenciesTwo[seqPage][seqStep % 8]);
       seqFrequenciesTwo[seqPage][seqStep % 8] = 0;
-
-
+      //
       seqStepClearFlag = false;
       seqStepClearTimeStamp = millis();
       indicatorIndex = 1;
@@ -310,11 +307,8 @@ void loop() {
         paramLocks[i] = false;
       }
       if (!paramLocks[i]) {
-
         rawVals[i] = analogValues[i];
-
         setSynthParams(i, analogValues[i]);
-
       }
       analogValuesLag[i] = analogValues[i];
     }
@@ -370,8 +364,8 @@ void loop() {
 
   // Voice Stuff
   for (int i = 0; i < 4; ++i) {
-
-    if (i == 0) {// VoiceA
+    if (i == 0) {
+      // VoiceA
       voiceOneA.frequency(VoiceFreq[i] * octave[octaveKey] * lfoPitchMod);
       voiceTwoA.frequency(VoiceFreq[i] * octave[octaveKey] * plusDetune * lfoPitchMod);
       voiceThreeA.frequency(VoiceFreq[i] * octave[octaveKey] * minusDetune * lfoPitchMod);
@@ -425,6 +419,7 @@ void loop() {
   // LFO
   LFO1.frequency(lfoFreq);
   LFO1.amplitude(lfoAmt);
+  
   // Filter
   filterA.frequency(filterFreq);
   filterA.resonance(filterRes);
@@ -434,15 +429,18 @@ void loop() {
   filterC.resonance(filterRes);
   filterD.frequency(filterFreq);
   filterD.resonance(filterRes);
+  
   // LFO2
   if (lfoPeak.available()) {
     lfoPitchMod = lfoPeak.read() + .5;
   }
+  
   // voiceA
   if (peakA.available()) {
     voiceAPeak = peakA.read();
     ampArray[0] = voiceAPeak;
   }
+  
   // voiceB
   if (peakB.available()) {
     voiceBPeak = peakB.read();
@@ -453,18 +451,19 @@ void loop() {
     voiceCPeak = peakC.read();
     ampArray[2] = voiceCPeak;
   }
+  
   // voiceD
   if (peakD.available()) {
     voiceDPeak = peakD.read();
     ampArray[3] = voiceDPeak;
   }
+  
   // FinalPeak
   if (finalPeak.available()) {
     finalAmp = finalPeak.read();
   }
 
   firstRun = false;
-
 }
 
 // START MIDI

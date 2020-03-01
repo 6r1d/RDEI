@@ -143,7 +143,7 @@ bool noteTouched[8];
 int noteTouchPins[8] = {0, 1, 15, 16, 17, 25, 32, 33};
 float noteCurrent[8];
 
-// Switches/EncoderBtn
+// Switches / EncoderBtn
 Bounce btnSwBouncers[5] = {
   Bounce(3, 10),
   Bounce(4, 10),
@@ -156,7 +156,6 @@ int btnSwPins[5] = {3, 4, 5, 8, 20};
 // Knobs
 float analogValues[16];
 float analogValuesLag[16];
-
 
 // FirstRunFlag
 bool firstRun;
@@ -197,8 +196,6 @@ unsigned long seqStepClearTimeStamp;
 float currentSeqNote;
 float currentSeqNoteTwo;
 int seqLength;
-
-
 
 // Synth Params
 float rawVals[20];
