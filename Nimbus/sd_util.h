@@ -20,8 +20,8 @@ void setupSD() {
 // preset stuff
 int presetNumber = -1;
 
-// TODO related to analogValues,
-// which is, in turn, related to MUX input pins
+// Raw analog values for handles
+// like amplitudes and frequencies
 float rawVals[20];
 
 File myFile;
