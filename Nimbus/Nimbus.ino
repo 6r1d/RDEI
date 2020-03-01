@@ -13,9 +13,10 @@ void setup() {
 
   setupMIDIHandlers();
 
-  // SD
-  SPI.setMOSI(7);  //  Audio shield has MOSI on pin 7
-  SPI.setSCK(14);  //  Audio shield has SCK on pin 14
+  // SD config
+  //  Audio shield has MOSI on pin 7, SCK on pin 14
+  SPI.setMOSI(7);
+  SPI.setSCK(14);
   Serial.print("Initializing SD card...");
   if (!SD.begin(chipSelect)) {
     Serial.println("initialization failed!");
@@ -52,7 +53,7 @@ void setup() {
   voiceThreeB.amplitude(.25);
   voiceThreeC.amplitude(.25);
   voiceThreeD.amplitude(.25);
-  // noise
+  // Noise
   noiseVoiceA.amplitude(.125);
   noiseVoiceB.amplitude(.125);
   noiseVoiceC.amplitude(.125);
