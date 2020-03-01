@@ -480,56 +480,6 @@ void OnNoteOff(byte channel, byte note, byte velocity) {
 }
 // END MIDI
 
-void setVoceOneShape (bool saw) {
-  if (saw) {
-    voiceOneA.begin(WAVEFORM_SAWTOOTH);
-    voiceOneB.begin(WAVEFORM_SAWTOOTH);
-    voiceOneC.begin(WAVEFORM_SAWTOOTH);
-    voiceOneD.begin(WAVEFORM_SAWTOOTH);
-  } else {
-    voiceOneA.begin(WAVEFORM_SQUARE);
-    voiceOneB.begin(WAVEFORM_SQUARE);
-    voiceOneC.begin(WAVEFORM_SQUARE);
-    voiceOneD.begin(WAVEFORM_SQUARE);
-  }
-}
-
-void setVoceTwoShape (bool saw) {
-  if (saw) {
-    voiceTwoA.begin(WAVEFORM_SAWTOOTH);
-    voiceTwoB.begin(WAVEFORM_SAWTOOTH);
-    voiceTwoC.begin(WAVEFORM_SAWTOOTH);
-    voiceTwoD.begin(WAVEFORM_SAWTOOTH);
-  } else {
-    voiceTwoA.begin(WAVEFORM_SQUARE);
-    voiceTwoB.begin(WAVEFORM_SQUARE);
-    voiceTwoC.begin(WAVEFORM_SQUARE);
-    voiceTwoD.begin(WAVEFORM_SQUARE);
-  }
-}
-
-void setVoceThreeShape (bool saw) {
-  if (saw) {
-    voiceThreeA.begin(WAVEFORM_TRIANGLE);
-    voiceThreeB.begin(WAVEFORM_TRIANGLE);
-    voiceThreeC.begin(WAVEFORM_TRIANGLE);
-    voiceThreeD.begin(WAVEFORM_TRIANGLE);
-  } else {
-    voiceThreeA.begin(WAVEFORM_SQUARE);
-    voiceThreeB.begin(WAVEFORM_SQUARE);
-    voiceThreeC.begin(WAVEFORM_SQUARE);
-    voiceThreeD.begin(WAVEFORM_SQUARE);
-  }
-}
-
-void setLfoShape(bool sine) {
-  if (sine) {
-    LFO1.begin(WAVEFORM_SINE);
-  } else {
-    LFO1.begin(WAVEFORM_SAWTOOTH_REVERSE);
-  }
-}
-
 void clearEverything() {
   neoPixelsOff();
   menuCount = 0;
@@ -571,7 +521,7 @@ void checkSeqStart() {
       seqLength = 32;
     }
   }
-
+  // 
   for (int i = 0; i < 4; ++i) {
     voices[i] = 0;
     for (int k = 0; k < 8; ++k) {
@@ -584,7 +534,7 @@ void checkSeqStart() {
       break;
     }
   }
-
+  // 
   if (seqInterval == 0) {
     encoderValue = 1700;
     seqInterval = 300;
@@ -592,20 +542,11 @@ void checkSeqStart() {
   } else {
     encoderValue = 2000 - seqInterval;
   }
-
+  // 
   lastEncoded = encoded;
   seqStep = 0;
   seqPage = 0;
   metronome.reset();
-}
-
-int smoothRead(int pin) {
-  int vals[8]; // array that stores 8 readings.
-  for (int i = 0; i < 8; i++) {
-    vals[i] = touchRead(pin); // takes 8 readings.
-  }
-  float smooth = (vals[0] + vals[1] + vals[2] + vals[3] + vals[4] + vals[5] + vals[6] + vals[7]) / 8;
-  return smooth;
 }
 
 void setSynthParams(int number, float value) {
