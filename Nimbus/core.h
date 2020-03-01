@@ -189,22 +189,29 @@ float voiceDPeak;
 
 int attackTime = 10;
 int releaseTime = 10;
+
 float lfoAmt;
 float lfoFreq;
+
 int lfoTimeMathArray[5] = {250, 500, 1000, 2000, 4000};
 int lfoIndex;
+
 float seqInterval;
+
 float lfoTwoAmt;
 float lfoTwoFreq;
 float lfoPitchMod;
+
 float octave[4] = {.25, .5, 1, 2};
 int midiOctave[4] = {-24, -12, 0, 12};
+
 int octaveKey;
 int filterFreq;
 float filterRes;
 float masterDetune;
 float plusDetune;
 float minusDetune;
+
 unsigned long filterEnvAttack;
 unsigned long filterEnvRelease;
 

@@ -67,11 +67,10 @@ void loop() {
     }
   }
   pixels.show();
-
   // Note Touches
   for (int i = 0; i < 8; ++i) {
     noteCurrent[i] = smoothRead(noteTouchPins[i]);
-
+    //
     if (noteCurrent[i] > 1000 && noteTouched[i] == false) {
       if (menuCount == 1) {
         presetNumber = i;
@@ -90,7 +89,7 @@ void loop() {
         // store step * octave
         frequency = noteFrequencies[scale][i];
         startVoice(frequency, 1);
-        // mono or poly - 2 note max
+        // Mono or poly - 2 note max
         if (!seqFrequencies[seqPage][seqStep % 8]) {
           seqFrequencies[seqPage][seqStep % 8] = noteFrequencies[scale][i] * octave[octaveKey];
         } else if (!seqFrequenciesTwo[seqPage][seqStep % 8]) {
@@ -98,7 +97,7 @@ void loop() {
         }
 
       } else {
-        // just play the note
+        // Just play the note
         frequency = noteFrequencies[scale][i];
         startVoice(frequency, 1);
         usbMIDI.sendNoteOn(noteMIDINumbers[scale][i] + midiOctave[octaveKey], 127, 1);
@@ -169,8 +168,6 @@ void loop() {
     }
     if (menuCount == 4 || menuCount == 0) {
       for (int i = 0; i < 8; ++i) {
-        // background blue
-        // pixels.setPixelColor(i, pixels.Color(0,0,20));
         // Green/teal if there is a note(s) stored
         if (seqFrequencies[seqPage][i] && seqFrequenciesTwo[seqPage][i]) {
           pixels.setPixelColor(i, pixels.Color(100, 255, 0));
