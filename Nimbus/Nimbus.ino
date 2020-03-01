@@ -1,7 +1,7 @@
 #include "core.h"
 #include "mux.h"
-#include "encoder.h"
 #include "voice.h"
+#include "sd_util.h"
 #include "usb_midi.h"
 
 void setup() {
@@ -12,84 +12,10 @@ void setup() {
   Serial.begin(9600);
 
   setupMIDIHandlers();
+  setupSD();
+  resetGraph();
+  resetMux();
 
-  // SD config
-  //  Audio shield has MOSI on pin 7, SCK on pin 14
-  SPI.setMOSI(7);
-  SPI.setSCK(14);
-  Serial.print("Initializing SD card...");
-  if (!SD.begin(chipSelect)) {
-    Serial.println("initialization failed!");
-    return;
-  }
-  Serial.println("initialization done.");
-  
-  // lfoMixer
-  LfoMixer.gain(0, .5);
-  LfoMixer.gain(1, .5);
-  // Set LFO amplitudes
-  lfo2Amt.amplitude(1);
-  LFO2.amplitude(1);
-  LFO2.frequency(1);
-  // finalMixer
-  finalMixer.gain(0, .25);
-  finalMixer.gain(1, .25);
-  finalMixer.gain(2, .25);
-  finalMixer.gain(3, .25);
-  // Voice 1
-  voiceOneA.amplitude(.25);
-  voiceOneB.amplitude(.25);
-  voiceOneC.amplitude(.25);
-  voiceOneD.amplitude(.25);
-  // Voice 2
-  voiceTwoA.amplitude(.25);
-  voiceTwoB.amplitude(.25);
-  voiceTwoC.amplitude(.25);
-  voiceTwoD.amplitude(.25);
-  // Voice 3
-  voiceThreeA.amplitude(.25);
-  voiceThreeB.amplitude(.25);
-  voiceThreeC.amplitude(.25);
-  voiceThreeD.amplitude(.25);
-  // Noise
-  noiseVoiceA.amplitude(.125);
-  noiseVoiceB.amplitude(.125);
-  noiseVoiceC.amplitude(.125);
-  noiseVoiceD.amplitude(.125);
-  // LFO
-  LFO1.begin(.7, .5, WAVEFORM_SAWTOOTH_REVERSE);
-  // filter
-  filterA.octaveControl(2.5);
-  filterB.octaveControl(2.5);
-  filterC.octaveControl(2.5);
-  filterD.octaveControl(2.5);
-  // ENCODER KNOB
-  pinMode(encoderPin1, INPUT);
-  pinMode(encoderPin2, INPUT);
-  digitalWrite(encoderPin1, HIGH);
-  digitalWrite(encoderPin2, HIGH);
-  attachInterrupt(21, updateEncoder, CHANGE);
-  attachInterrupt(24, updateEncoder, CHANGE);
-  // Pixels
-  pixels.begin();
-  pixels.setBrightness(200);
-  pixelDance();
-  // Switches/EncoderBtn
-  pinMode(3, INPUT_PULLUP);
-  pinMode(4, INPUT_PULLUP);
-  pinMode(5, INPUT_PULLUP);
-  pinMode(8, INPUT_PULLUP);
-  pinMode(20, INPUT_PULLUP);
-  // Mux
-  pinMode(s0, OUTPUT);
-  pinMode(s1, OUTPUT);
-  pinMode(s2, OUTPUT);
-  pinMode(s3, OUTPUT);
-  pinMode(SIG_pin, INPUT);
-  digitalWrite(s0, LOW);
-  digitalWrite(s1, LOW);
-  digitalWrite(s2, LOW);
-  digitalWrite(s3, LOW);
   // 
   firstRun = true;
 }
