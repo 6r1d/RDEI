@@ -1,7 +1,6 @@
 #include "core.h"
 #include "mux.h"
 #include "voice.h"
-#include "sd_util.h"
 #include "usb_midi.h"
 
 void setup() {

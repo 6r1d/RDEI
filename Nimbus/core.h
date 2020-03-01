@@ -157,11 +157,8 @@ int menuCount;
 
 unsigned long clearTimeStamp;
 
-#include "preset.h"
+#include "sd_util.h"
 #include "encoder.h"
-
-const int chipSelect = 10;
-int presetNumber = -1;
 
 // sequencer
 Metro metronome = Metro(500);
